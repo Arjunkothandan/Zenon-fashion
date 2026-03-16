@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,12 @@ SECRET_KEY = 'django-insecure-(e6rj0!lc$bvluogks_0wky7injo*79ns+#f+j1*#%x+$0x*qq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    os.environ.get("RENDER_EXTERNAL_HOSTNAME"),  # Render automatically provides this
+    'zenon-fashion.onrender.com',  # your Render domain
+    'localhost',  # optional, for local testing
+    '127.0.0.1',  # optional, for local testing
+]
 
 
 # Application definition
