@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ item.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+
+<style>
+
+body{
+background:#f5f7fb;
+font-family:'Poppins',sans-serif;
+}
+
+.success-container{
+width:70%;
+margin:80px auto;
+background:white;
+padding:40px;
+border-radius:12px;
+box-shadow:0 10px 40px rgba(0,0,0,0.08);
+}
+
+.success-header{
+text-align:center;
+margin-bottom:40px;
+}
+
+.success-header h1{
+color:#28a745;
+font-size:38px;
+margin-bottom:10px;
+}
+
+.success-header p{
+color:#555;
+}
+
+.order-info{
+display:flex;
+justify-content:space-between;
+background:#f9fafc;
+padding:20px;
+border-radius:8px;
+margin-bottom:30px;
+}
+
+.order-info div{
+font-size:14px;
+}
+
+.order-info strong{
+display:block;
+color:#333;
+margin-bottom:5px;
+}
+
+.product-list{
+margin-top:20px;
+}
+
+.product-item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid #eee;
+padding:15px 0;
+}
+
+.product-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.product-left img{
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.product-name{
+font-weight:500;
+}
+
+.product-price{
+font-weight:600;
+}
+
+.total-section{
+margin-top:25px;
+display:flex;
+justify-content:space-between;
+font-size:20px;
+font-weight:bold;
+}
+
+.action-buttons{
+margin-top:35px;
+display:flex;
+justify-content:center;
+gap:20px;
+}
+
+.btn{
+padding:12px 25px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:15px;
+}
+
+.continue-btn{
+background:black;
+color:white;
+}
+
+.invoice-btn{
+background:#007bff;
+color:white;
+}
+
+.btn:hover{
+opacity:0.9;
+}
+
+</style>
+
+<body>
+   {% include 'navbar.html' %}
+   <div class="success-container">
+
+<div class="success-header">
+
+<h1>🎉 Order Placed Successfully!</h1>
+<p>Thank you for shopping with Zenon Fashion</p>
+
+</div>
+
+
+
+
+<!-- Order Info -->
+
+<div class="order-info">
+
+<div>
+<strong>Order ID</strong>
+#{{ orders.0.id }}
+</div>
+
+<div>
+<strong>Order Date</strong>
+{{ orders.0.created_at }}
+</div>
+
+<div>
+<strong>Estimated Delivery</strong>
+3 - 5 Days
+</div>
+
+</div>
+
+
+
+<!-- Product List -->
+
+<div class="product-list">
+
+<h3>Order Items</h3>
+
+{% for item in orders %}
+
+
+<div class="product-item">
+
+<div class="product-left">
+
+<img src="{{ item.product.image.url }}">
+
+<div>
+<div class="product-name">{{ item.product.name }}</div>
+<div>Quantity: {{ item.quantity }}</div>
+</div>
+
+</div>
+
+<div class="product-price">
+₹ {{ item.product.price }} × {{ item.quantity }}
+</div>
+
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+<!-- Total -->
+
+<div class="total-section">
+
+<div>Total Amount</div>
+<div>₹ {{ total }}</div>
+
+</div>
+
+
+<!-- Buttons -->
+
+<div class="action-buttons">
+
+<a href="{% url 'main' %}">
+    <button class="btn continue-btn">Continue Shopping</button>
+</a>
+
+<a href="/invoice/{{ order.id }}/">
+<button class="btn invoice-btn">Download Invoice</button>
+</a>
+
+</div>
+
+</div>
+</body>
+</html>

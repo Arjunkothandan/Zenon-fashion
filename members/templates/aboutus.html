@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Zenon</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="about-container">
+
+        <div class="about-header">
+            <h1>About <span>Zenon</span></h1>
+            <p>Your simple and smart online shopping experience</p>
+        </div>
+
+        <div class="about-section">
+            <h2>What is Zenon?</h2>
+            <p>
+                Zenon is a beginner-level e-commerce website inspired by Amazon, created purely
+                for learning and educational purposes. This project helps in understanding how
+                online shopping platforms work in real-world scenarios.
+            </p>
+        </div>
+
+        <div class="about-section">
+            <h2>Our Purpose</h2>
+            <p>
+                The main goal of Zenon is to gain hands-on experience in web development by
+                implementing features such as product listing, categories, user authentication,
+                and basic cart functionality.
+            </p>
+        </div>
+
+        <div class="about-section">
+            <h2>What You Can Do</h2>
+            <ul class="about-list">
+                <li>Browse products by category</li>
+                <li>Create and manage user accounts</li>
+                <li>Add products to a shopping cart</li>
+                <li>Understand the checkout workflow</li>
+            </ul>
+        </div>
+
+        <div class="about-section">
+            <h2>Disclaimer</h2>
+            <p class="disclaimer">
+                Zenon is a non-commercial educational project and is not affiliated with or
+                endorsed by Amazon in any way.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

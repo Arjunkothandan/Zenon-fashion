@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ item.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% include 'navbar.html' %}
+
+<div class="detail-container">
+
+    <h1>{{ item.name }}</h1>
+
+    {% if item.image %}
+        <img src="{{ item.image.url }}" alt="{{ item.name }}" width="300" height="400">
+    {% else %}
+        <p>No image available</p>
+    {% endif %}
+
+    <div class="detail-desc">
+        <h3>Description</h3>
+        <p>{{ item.description }}</p>
+    </div>
+
+
+    <div class="price">
+        <h3>Price</h3>
+        <p>₹ {{ item.price }}</p>
+    </div>
+
+    <br>
+
+    <form method="POST" action="{% url 'add_to_cart' item.id %}">
+        {% csrf_token %}
+        <button class="cart-btn">Add To Cart 🛒</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'main' %}" class="back-btn">⬅ Back to Home</a>
+
+</div>
+
+{% include 'footer.html' %}
+
+</body>
+</html>

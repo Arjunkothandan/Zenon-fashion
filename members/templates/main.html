@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <script src="{% static 'js/bigtosmall.js' %}"></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% include 'slider.html' %}
+    <h1> Welcome to Zenon </h1>
+    <p> Let your fashion shine </p>
+    {% load static %}
+    <div class="sale-banner">
+       🔥 MEGA SALE 🔥 | 50% OFF on All Products | Shop Now!
+    </div>
+
+
+
+    <div class="gallery">
+
+{% for item in catagory %}
+
+<div class="gallery-item">
+
+    <div class="title">
+        {{ item.name }}
+    </div>
+
+    <a href="{% url 'category_detail' item.id %}">
+        <img onmouseover="bigImg(this)"
+             onmouseout="normalImg(this)"
+             src="{{ item.image.url }}"
+             height="300"
+             width="200">
+    </a>
+
+    <div class="desc">
+        {{ item.description }}
+    </div>
+
+    <!-- PRICE -->
+    <div class="price">
+        ₹ {{ item.price }}
+    </div>
+
+    <!-- ADD TO CART BUTTON -->
+    <form method="POST" action="{% url 'add_to_cart' item.id %}">
+        {% csrf_token %}
+        <button class="cart-btn">Add To Cart 🛒</button>
+    </form>
+
+    <br/>
+    <a href="{% url 'add_to_cart' item.id %}">
+     <button class="buy-btn">Buy Now</button>
+    </a>
+
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+</div>
+{% include 'footer.html' %}
+</body>
+</html>

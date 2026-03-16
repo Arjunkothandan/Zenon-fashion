@@ -1,0 +1,199 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Your Cart | Zenon</title>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<style>
+
+.cart-container{
+width:85%;
+margin:auto;
+padding:40px;
+}
+
+.cart-title{
+text-align:center;
+margin-bottom:40px;
+}
+
+.cart-item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.cart-left{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.cart-left img{
+width:120px;
+border-radius:8px;
+}
+
+.product-details h3{
+margin:0;
+}
+
+.product-details p{
+color:gray;
+margin:5px 0;
+}
+
+.cart-right{
+text-align:right;
+}
+
+.price{
+font-size:18px;
+font-weight:bold;
+color:#1a2a6c;
+}
+
+.quantity{
+margin-top:5px;
+}
+
+.remove-btn{
+background:#ff4d4d;
+color:white;
+border:none;
+padding:6px 12px;
+border-radius:5px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.remove-btn:hover{
+background:#e60000;
+}
+
+.empty-cart{
+text-align:center;
+margin-top:80px;
+font-size:20px;
+color:gray;
+}
+
+.quantity a{
+text-decoration:none;
+background:#1a2a6c;
+color:white;
+padding:4px 10px;
+margin:0 6px;
+border-radius:4px;
+font-weight:bold;
+}
+
+.quantity a:hover{
+background:#0f1b4d;
+}
+
+</style>
+
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<div class="cart-container">
+
+<h1 class="cart-title">Your Shopping Cart</h1>
+
+{% for item in items %}
+
+<div class="cart-item">
+
+<div class="cart-left">
+
+<img src="{{ item.product.image.url }}">
+
+<div class="product-details">
+
+<h3>{{ item.product.name }}</h3>
+
+<p>Category: {{ item.product.category.name }}</p>
+
+
+<p>Product ID: {{ item.product.id }}</p>
+
+</div>
+
+</div>
+
+<div class="cart-right">
+
+<p class="price">₹ {{ item.product.price }}</p>
+
+<div class="quantity">
+
+<a href="{% url 'decrease_quantity' item.id %}">➖</a>
+
+<span>{{ item.quantity }}</span>
+
+<a href="{% url 'increase_quantity' item.id %}">➕</a>
+
+</div>
+
+<a href="{% url 'remove_item' item.id %}">
+<button class="remove-btn">Remove</button>
+</a>
+
+
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="empty-cart">
+
+<h3>Your cart is empty 🛒</h3>
+
+<p>Browse our collections and add items to your cart.</p>
+
+</div>
+
+{% endfor %}
+
+{% if items %}
+
+<div style="text-align:center; margin-top:40px;">
+
+<a href="{% url 'order_success' %}">
+<button style="
+background:#1a2a6c;
+color:white;
+padding:12px 30px;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+">
+Proceed to Checkout
+</button>
+</a>
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+</body>
+</html>

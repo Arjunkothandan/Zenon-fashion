@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Zenon</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="contact-container">
+
+        <div class="contact-header">
+            <h1>Contact <span>Zenon</span></h1>
+            <p>We’d love to hear from you</p>
+        </div>
+
+        <div class="contact-content">
+
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>
+                    Zenon is a beginner-level educational project.  
+                    If you have feedback, suggestions, or questions, feel free to reach out!
+                </p>
+
+                <ul>
+                    <li><strong>Email:</strong> support@samazon.com</li>
+                    <li><strong>Phone:</strong> +91 99445 06466</li>
+                    <li><strong>Location:</strong> India</li>
+                </ul>
+            </div>
+
+            <div class="contact-form">
+                <h2>Send a Message</h2>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

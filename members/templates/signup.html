@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Signup - Zenon</title>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<style>
+
+.signup-container{
+    min-height:90vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:80px;   /* pushes form below navbar */
+    padding:40px 20px;
+}
+
+
+.signup-card{
+    background:white;
+    padding:40px;
+    width:400px;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    text-align:center;
+}
+
+.signup-card h2{
+    margin-bottom:25px;
+    color:#1a2a6c;
+}
+
+.signup-card input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:15px;
+}
+
+.signup-btn{
+    width:100%;
+    padding:12px;
+    background:linear-gradient(135deg,#ff9900,#ff6600);
+    border:none;
+    color:white;
+    font-size:16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.signup-btn:hover{
+    transform:scale(1.03);
+    box-shadow:0 8px 15px rgba(0,0,0,0.2);
+}
+
+.login-link{
+    margin-top:15px;
+    font-size:14px;
+}
+
+.login-link a{
+    color:#ff6600;
+    text-decoration:none;
+    font-weight:600;
+}
+
+</style>
+
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<div class="signup-container">
+
+<div class="signup-card">
+
+<h2>Create Your Account</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button class="signup-btn" type="submit">Signup</button>
+
+</form>
+
+<div class="login-link">
+Already have an account?
+<a href="/accounts/login/">Login</a>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
