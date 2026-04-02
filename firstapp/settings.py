@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(e6rj0!lc$bvluogks_0wky7injo*79ns+#f+j1*#%x+$0x*qq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     os.environ.get("RENDER_EXTERNAL_HOSTNAME"),  # Render automatically provides this
@@ -135,7 +135,7 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/images/'         # same as STATIC_URL
+MEDIA_URL = '/media/'         # same as STATIC_URL
 MEDIA_ROOT = BASE_DIR / 'media'
 
 RAZORPAY_KEY_ID = "rzp_test_SYdoaZPMEDnBRS"
