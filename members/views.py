@@ -6,6 +6,9 @@ from . models import Catagory,Cart
 from .models import Product
 from django.db.models import Q
 from .models import CartItem, Order
+import razorpay
+from django.conf import settings
+from django.shortcuts import render
 
 
 def main(request):
@@ -111,21 +114,6 @@ def search(request):
 
     return render(request,'search_results.html',context)
 
-def payment(request, id):
-
-    product = get_object_or_404(Product, id=id)
-
-    items = [{
-        "product": product,
-        "quantity": 1
-    }]
-
-    total = product.price
-
-    return render(request, "payment.html", {
-        "items": items,
-        "total": total
-    })
 
 
 def order_success(request):
@@ -184,17 +172,22 @@ def order_success(request):
 
 
 def place_order(request):
-
     if request.method == "POST":
-
-        payment_method = request.POST.get("payment")
 
         items = Cart.objects.filter(user=request.user)
 
-        # clear cart after order
+        for item in items:
+            Order.objects.create(
+                user=request.user,
+                product=item.product,
+                quantity=item.quantity,
+                total_price=item.product.price * item.quantity
+            )
+
         items.delete()
 
         return redirect("order_success")
+
 
 def checkout(request):
     cart_items = Cart.objects.all()
@@ -207,6 +200,25 @@ def checkout(request):
         "cart_items": cart_items,
         "total": total
     })
+
+
+def payment(request):
+    items = Cart.objects.filter(user=request.user)
+
+    total = 0
+    for item in items:
+        total += item.product.price * item.quantity
+
+    amount = int(total * 100)  # Razorpay uses paise
+
+    return render(request, "payment.html", {
+        "items": items,
+        "total": total,
+        "amount": amount,
+        "RAZORPAY_KEY_ID": settings.RAZORPAY_KEY_ID
+    })
+
+
 
 
 # Create your views here.

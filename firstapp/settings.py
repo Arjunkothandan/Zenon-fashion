@@ -133,3 +133,6 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/images/'         # same as STATIC_URL
 MEDIA_ROOT = BASE_DIR / 'static'
+
+RAZORPAY_KEY_ID = "rzp_test_SYdoaZPMEDnBRS"
+RAZORPAY_KEY_SECRET = "49tLZCnQLkDh8Z0EDk041m0c"

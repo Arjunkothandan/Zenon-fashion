@@ -1,6 +1,16 @@
 {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Checkout | Zenon</title>
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+</head>
+
+<body>
 
 {% include 'navbar.html' %}
 
@@ -18,8 +28,8 @@
 <div class="order-item">
 <img src="{{ item.product.image.url }}" class="order-image">
 
-<div class="order-info">
-<p class="product-name">{{ item.product.name }}</p>
+<div>
+<p><b>{{ item.product.name }}</b></p>
 <p>₹ {{ item.product.price }} × {{ item.quantity }}</p>
 </div>
 
@@ -37,30 +47,27 @@
 </div>
 
 
-<!-- Payment Section -->
+<!-- Payment -->
 <div class="payment-section">
 
-<h3>Select Payment Method</h3>
+<h3 style="margin-bottom: 15px;">Payment Method</h3>
 
 <form method="POST" action="{% url 'place_order' %}">
 {% csrf_token %}
 
-<label class="payment-option">
-<input type="radio" name="payment" required>
-<span>UPI Payment</span>
-</label>
+<label>
+<input type="radio" name="payment" value="online" required>
+UPI / Card (Online Payment)
+</label><br><br>
 
-<label class="payment-option">
-<input type="radio" name="payment">
-<span>Credit / Debit Card</span>
-</label>
+<label>
+<input type="radio" name="payment" value="cod">
+Cash on Delivery
+</label><br><br>
 
-<label class="payment-option">
-<input type="radio" name="payment">
-<span>Cash on Delivery</span>
-</label>
-
-<button class="pay-btn">Place Order</button>
+<button type="button" id="pay-btn" class="pay-btn">
+Pay Now
+</button>
 
 </form>
 
@@ -68,102 +75,40 @@
 
 </div>
 
+<<script>
+document.getElementById("pay-btn").onclick = function(e){
 
+    var selected = document.querySelector('input[name="payment"]:checked');
 
-<style>
+    if(!selected){
+        alert("Select payment method");
+        return;
+    }
 
-body{
-background:#f5f5f5;
-font-family:Arial, sans-serif;
+    if(selected.value === "cod"){
+        document.querySelector("form").submit();
+        return;
+    }
+
+    var options = {
+        "key": "{{ RAZORPAY_KEY_ID }}",
+        "amount": {{ amount }},
+        "currency": "INR",
+        "name": "Zenon Fashion",
+        "description": "Order Payment",
+
+        "handler": function (response){
+            window.location.href = "{% url 'place_order' %}";
+        },
+
+        "theme": {
+            "color": "#ff6b00"
+        }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+
+    e.preventDefault();
 }
-
-.checkout-title{
-text-align:center;
-margin-top:25px;
-}
-
-.checkout-container{
-display:flex;
-justify-content:center;
-gap:40px;
-margin:40px auto;
-max-width:900px;
-}
-
-/* Order Summary */
-
-.order-summary{
-flex:1;
-background:white;
-padding:25px;
-border-radius:10px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-}
-
-.order-item{
-display:flex;
-align-items:center;
-gap:15px;
-margin-bottom:15px;
-}
-
-.order-image{
-width:60px;
-height:60px;
-object-fit:cover;
-border-radius:6px;
-}
-
-.product-name{
-font-weight:bold;
-}
-
-.total-section{
-display:flex;
-justify-content:space-between;
-margin-top:15px;
-font-size:18px;
-}
-
-/* Payment */
-
-.payment-section{
-flex:1;
-background:white;
-padding:25px;
-border-radius:10px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-}
-
-.payment-option{
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px;
-border:1px solid #ddd;
-border-radius:6px;
-margin-bottom:10px;
-cursor:pointer;
-}
-
-.payment-option:hover{
-background:#f8f8f8;
-}
-
-.pay-btn{
-width:100%;
-margin-top:15px;
-padding:14px;
-background:#ff6b00;
-color:white;
-border:none;
-border-radius:6px;
-font-size:16px;
-cursor:pointer;
-}
-
-.pay-btn:hover{
-background:#e65c00;
-}
-
-</style>
+</script>
