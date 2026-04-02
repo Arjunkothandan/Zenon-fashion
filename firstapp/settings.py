@@ -50,13 +50,15 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    
+]   
 
 ROOT_URLCONF = 'firstapp.urls'
 
@@ -128,11 +130,13 @@ STATIC_ROOT = BASE_DIR/'staticfiles'
 
 #If you have a project-level static directory
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'members/static',
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = '/images/'         # same as STATIC_URL
-MEDIA_ROOT = BASE_DIR / 'static'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 RAZORPAY_KEY_ID = "rzp_test_SYdoaZPMEDnBRS"
 RAZORPAY_KEY_SECRET = "49tLZCnQLkDh8Z0EDk041m0c"
